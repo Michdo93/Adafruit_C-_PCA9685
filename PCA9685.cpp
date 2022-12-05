@@ -43,7 +43,7 @@ void PCA9685::init(const uint8_t BUS, const uint8_t PCA9685_ADDRESS)
 {
     i2cHandle = i2cOpen(BUS, PCA9685_ADDRESS, 0);
 
-    set_all_pwm(0, 0);
+    setAllPWM(0, 0);
 
     i2cWriteByteData(i2cHandle, MODE2, OUTDRV);
     i2cWriteByteData(i2cHandle, MODE1, ALLCALL);
@@ -58,26 +58,26 @@ void PCA9685::init(const uint8_t BUS, const uint8_t PCA9685_ADDRESS)
 }
 
 /*Set the PWM frequency to the provided value in hertz.*/
-void PCA9685::set_pwm_freq(float freq_hz)
+void PCA9685::setPWMFreq(const float *freq_hz)
 {
-    int prescaleval = (int)(25000000.0f / (4096 * freq_hz) - 1.0f);
+    int preScaleVal = (int)(25000000.0f / (4096 * freq_hz) - 1.0f);
 
-    int prescale = (int)floor(prescaleval + 0.5);
+    int preScale = (int)floor(preScaleVal + 0.5);
 
-    int oldmode = (i2cReadByteData(i2cHandle, MODE1)) + 128;  // unsigned byte to byte conversion
-    int newmode = (oldmode & 0x7F) | 0x10;    // sleep
+    int oldMode = (i2cReadByteData(i2cHandle, MODE1)) + 128;  // unsigned byte to byte conversion
+    int newMode = (oldMode & 0x7F) | 0x10;    // sleep
 
-    i2cWriteByteData(i2cHandle, MODE1, newmode);  // go to sleep
-    i2cWriteByteData(i2cHandle, PRESCALE, prescale);
-    i2cWriteByteData(i2cHandle, MODE1, oldmode);
+    i2cWriteByteData(i2cHandle, MODE1, newMode);  // go to sleep
+    i2cWriteByteData(i2cHandle, PRESCALE, preScale);
+    i2cWriteByteData(i2cHandle, MODE1, oldMode);
 
     usleep(5000);
 
-    i2cWriteByteData(i2cHandle, MODE1, oldmode | 0x80);
+    i2cWriteByteData(i2cHandle, MODE1, oldMode | 0x80);
 }
 
 /*Sets a single PWM channel.*/
-void PCA9685::set_pwm(int channel, int on, int off)
+void PCA9685::setPWM(int channel, int on, int off)
 {
     i2cWriteByteData(i2cHandle, LED0_ON_L+4*channel, on & 0xFF);
     i2cWriteByteData(i2cHandle, LED0_ON_H+4*channel, on >> 8);
@@ -86,7 +86,7 @@ void PCA9685::set_pwm(int channel, int on, int off)
 }
 
 /*Sets all PWM channels.*/
-void PCA9685::set_all_pwm(int on, int off)
+void PCA9685::setAllPWM(int on, int off)
 {
     i2cWriteByteData(i2cHandle, ALL_LED_ON_L, on & 0xFF);
     i2cWriteByteData(i2cHandle, ALL_LED_ON_H, on >> 8);
