@@ -1,7 +1,5 @@
 #include <iostream>
-#include <unistd.h>
 #include <stdio.h>
-#include <stdlib.h>
 #include <pigpio.h>
 #include "PCA9685.h"
 
@@ -16,16 +14,16 @@ int main()
     PCA9685 pwm;
     pwm.init(1, 0x40);
 
-    int servo_min = 150;    // Min pulse length out of 4096
-    int servo_max = 600;    // Max pulse length out of 4096
+    int servoMin = 150;    // Min pulse length out of 4096
+    int servoMax = 600;    // Max pulse length out of 4096
 
     // Set frequency to 60hz, good for servos.
-    pwm.set_pwm_freq(60);
+    pwm.setPWMFreq(60);
 
     while(1) {
-        pwm.set_pwm(0, 0, servo_min);
+        pwm.setPWM(0, 0, servoMin);
         usleep(1000000);
-        pwm.set_pwm(0, 0, servo_max);
+        pwm.setPWM(0, 0, servoMax);
         usleep(1000000);
     }
 }
