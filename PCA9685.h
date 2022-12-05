@@ -6,18 +6,18 @@ class PCA9685
   public:
     PCA9685();
     void init(const uint8_t BUS, const uint8_t PCA9685_ADDRESS);
-    void set_pwm_freq(float freq_hz);
-    void set_pwm(int channel, int on, int off);
-    void set_all_pwm(int on, int off);
+    void setPWMFreq(const float &freq_hz);
+    void setPWM(const uint8_t channel, const uint8_t on, const uint8_t off);
+    void setAllPWM(const uint8_t on, const uint8_t off);
     ~PCA9685();
 
   private:
     int i2cHandle;
-    int mode1;
-    int prescaleval;
-    int prescale;
-    int oldmode;
-    int newmode;
+    uint8_t mode1;
+    uint16_t preScaleVal;
+    uint16_t preScale;
+    uint16_t oldMode;
+    uint16_t newMode;
 };
 
 #endif
