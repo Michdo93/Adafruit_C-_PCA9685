@@ -5,10 +5,10 @@ class PCA9685
 {
   public:
     PCA9685();
-    void init(const uint8_t BUS, const uint8_t PCA9685_ADDRESS);
+    void init(const uint8_t &BUS, const uint8_t &PCA9685_ADDRESS);
     void setPWMFreq(const float &freq_hz);
-    void setPWM(const uint8_t channel, const uint8_t on, const uint8_t off);
-    void setAllPWM(const uint8_t on, const uint8_t off);
+    void setPWM(const uint8_t &channel, const uint8_t &on, const uint8_t &off);
+    void setAllPWM(const uint8_t &on, const uint8_t &off);
     ~PCA9685();
 
   private:
