@@ -1,19 +1,18 @@
-
 # the compiler: define as g++ for C++
 CC = g++
- 
 # compiler flags:
 CFLAGS = -Wall -pthread
 LFLAGS = -lpigpio -lrt
- 
 # The build target 
-TARGET = libPCA9685Sample.cpp PCA9685.cpp
-EXECUTABLE = testServo
- 
+TARGETSERVO = libPCA9685Sample.cpp PCA9685.cpp
+TARGETMOTOR = l298n_pca9685.cpp
+EXECUTABLESERVO = testServo
+EXECUTABLEMOTOR = testMotor
+EXECUTABLE = $(EXECUTABLESERVO) $(EXECUTABLEMOTOR)
 all: $(EXECUTABLE)
- 
-$(EXECUTABLE): ./$(EXECUTABLE)
-            $(CC) $(CFLAGS) $(TARGET) -o $(EXECUTABLE) $(LFLAGS)
- 
+$(EXECUTABLESERVO): ./$(EXECUTABLESERVO)
+            $(CC) $(CFLAGS) $(TARGET) -o $(EXECUTABLESERVO) $(LFLAGS)
+$(EXECUTABLEMOTOR): ./$(EXECUTABLEMOTOR)
+            $(CC) $(CFLAGS) $(TARGET) -o $(EXECUTABLEMOTOR) $(LFLAGS)
 clean:
             $(RM) $(EXECUTABLE)
