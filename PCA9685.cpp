@@ -77,7 +77,7 @@ void PCA9685::setPWMFreq(const float &freq_hz)
 }
 
 /*Sets a single PWM channel.*/
-void PCA9685::setPWM(const uint8_t &channel, const uint8_t &on, const uint8_t &off)
+void PCA9685::setPWM(const uint8_t &channel, const uint16_t &on, const uint16_t &off)
 {
     i2cWriteByteData(i2cHandle, LED0_ON_L+4*channel, on & 0xFF);
     i2cWriteByteData(i2cHandle, LED0_ON_H+4*channel, on >> 8);
@@ -86,7 +86,7 @@ void PCA9685::setPWM(const uint8_t &channel, const uint8_t &on, const uint8_t &o
 }
 
 /*Sets all PWM channels.*/
-void PCA9685::setAllPWM(const uint8_t &on, const uint8_t &off)
+void PCA9685::setAllPWM(const uint16_t &on, const uint16_t &off)
 {
     i2cWriteByteData(i2cHandle, ALL_LED_ON_L, on & 0xFF);
     i2cWriteByteData(i2cHandle, ALL_LED_ON_H, on >> 8);
